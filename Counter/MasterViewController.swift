@@ -35,21 +35,61 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
 
 	@objc
 	func insertNewObject(_ sender: Any) {
-		let context = self.fetchedResultsController.managedObjectContext
-		let newEvent = Event(context: context)
-		     
-		// If appropriate, configure the new managed object.
-		newEvent.timestamp = Date()
-
-		// Save the context.
-		do {
-		    try context.save()
-		} catch {
-		    // Replace this implementation with code to handle the error appropriately.
-		    // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-		    let nserror = error as NSError
-		    fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
+		displayForm(message: "")
+	}
+	
+	func displayForm(message: String) {
+		
+		var counter_title: UITextField!
+		var counter_val: UITextField!
+		
+		let alert = UIAlertController(title: "New Counter", message: message, preferredStyle: .alert)
+		
+		alert.addTextField(configurationHandler: {(textField: UITextField!) in
+			textField.placeholder = "Counter Title..."
+			counter_title = textField
+		})
+		
+		alert.addTextField(configurationHandler: {(textField: UITextField!) in
+			textField.placeholder = "Counter Value..."
+			textField.keyboardType = UIKeyboardType.numberPad
+			counter_val = textField
+		})
+		
+		self.present(alert, animated: true, completion: nil)
+		
+		let cancelAction = UIAlertAction(title: "Cancel" , style: .cancel)
+		let saveAction = UIAlertAction(title: "Submit", style: .default) { (action) -> Void in
+			
+			if((counter_title.text?.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)!
+				|| (counter_val.text?.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)! ){
+				
+				counter_title.text = ""
+				counter_val.text = ""
+				
+				self.displayForm(message: "One of the values entered was invalid. Please re-enter information.")
+			}
+			else {
+				let context = self.fetchedResultsController.managedObjectContext
+				let newEvent = Event(context: context)
+				
+				// If appropriate, configure the new managed object.
+				newEvent.timestamp = Date()
+				newEvent.counterTitle = counter_title.text!
+				newEvent.counterVal = Int64(counter_val.text!)!
+				
+				// Save the context.
+				do {
+					try context.save()
+				} catch {
+					let nserror = error as NSError
+					fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
+				}
+			}
 		}
+		alert.addAction(cancelAction)
+		alert.addAction(saveAction)
+		
 	}
 
 	// MARK: - Segues
@@ -106,7 +146,7 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
 	}
 
 	func configureCell(_ cell: UITableViewCell, withEvent event: Event) {
-		cell.textLabel!.text = event.timestamp!.description
+		cell.textLabel!.text = event.counterTitle
 	}
 
 	// MARK: - Fetched results controller
