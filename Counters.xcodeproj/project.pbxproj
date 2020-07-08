@@ -17,7 +17,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		CE0F58B724B5423C00C77A50 /* Counter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Counter.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		CE0F58B724B5423C00C77A50 /* Counters.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Counters.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE0F58BA24B5423C00C77A50 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CE0F58BD24B5423C00C77A50 /* Counter.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Counter.xcdatamodel; sourceTree = "<group>"; };
 		CE0F58BF24B5423C00C77A50 /* MasterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasterViewController.swift; sourceTree = "<group>"; };
@@ -50,7 +50,7 @@
 		CE0F58B824B5423C00C77A50 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				CE0F58B724B5423C00C77A50 /* Counter.app */,
+				CE0F58B724B5423C00C77A50 /* Counters.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -73,9 +73,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		CE0F58B624B5423C00C77A50 /* Counter */ = {
+		CE0F58B624B5423C00C77A50 /* Counters */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = CE0F58CE24B5423D00C77A50 /* Build configuration list for PBXNativeTarget "Counter" */;
+			buildConfigurationList = CE0F58CE24B5423D00C77A50 /* Build configuration list for PBXNativeTarget "Counters" */;
 			buildPhases = (
 				CE0F58B324B5423C00C77A50 /* Sources */,
 				CE0F58B424B5423C00C77A50 /* Frameworks */,
@@ -85,9 +85,9 @@
 			);
 			dependencies = (
 			);
-			name = Counter;
+			name = Counters;
 			productName = Counter;
-			productReference = CE0F58B724B5423C00C77A50 /* Counter.app */;
+			productReference = CE0F58B724B5423C00C77A50 /* Counters.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -105,7 +105,7 @@
 					};
 				};
 			};
-			buildConfigurationList = CE0F58B224B5423C00C77A50 /* Build configuration list for PBXProject "Counter" */;
+			buildConfigurationList = CE0F58B224B5423C00C77A50 /* Build configuration list for PBXProject "Counters" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -118,7 +118,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				CE0F58B624B5423C00C77A50 /* Counter */,
+				CE0F58B624B5423C00C77A50 /* Counters */,
 			);
 		};
 /* End PBXProject section */
@@ -297,7 +297,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.akaashvenkat.Counter;
+				PRODUCT_BUNDLE_IDENTIFIER = com.akaashvenkat.Counters;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -315,7 +315,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.akaashvenkat.Counter;
+				PRODUCT_BUNDLE_IDENTIFIER = com.akaashvenkat.Counters;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -325,7 +325,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		CE0F58B224B5423C00C77A50 /* Build configuration list for PBXProject "Counter" */ = {
+		CE0F58B224B5423C00C77A50 /* Build configuration list for PBXProject "Counters" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				CE0F58CC24B5423D00C77A50 /* Debug */,
@@ -334,7 +334,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		CE0F58CE24B5423D00C77A50 /* Build configuration list for PBXNativeTarget "Counter" */ = {
+		CE0F58CE24B5423D00C77A50 /* Build configuration list for PBXNativeTarget "Counters" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				CE0F58CF24B5423D00C77A50 /* Debug */,
