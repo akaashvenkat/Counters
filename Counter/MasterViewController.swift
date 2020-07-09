@@ -147,6 +147,7 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
 
 	func configureCell(_ cell: UITableViewCell, withEvent event: Event) {
 		cell.textLabel!.text = event.counterTitle
+		cell.detailTextLabel!.text = "Count: " + String(event.counterVal)
 	}
 
 	// MARK: - Fetched results controller
@@ -162,7 +163,7 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
 	    fetchRequest.fetchBatchSize = 20
 	    
 	    // Edit the sort key as appropriate.
-	    let sortDescriptor = NSSortDescriptor(key: "timestamp", ascending: false)
+	    let sortDescriptor = NSSortDescriptor(key: "counterTitle", ascending: true)
 	    
 	    fetchRequest.sortDescriptors = [sortDescriptor]
 	    
@@ -207,7 +208,7 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
 	        case .delete:
 	            tableView.deleteRows(at: [indexPath!], with: .fade)
 	        case .update:
-	            configureCell(tableView.cellForRow(at: indexPath!)!, withEvent: anObject as! Event)
+							configureCell(tableView.cellForRow(at: indexPath!)!, withEvent: anObject as! Event)
 	        case .move:
 	            configureCell(tableView.cellForRow(at: indexPath!)!, withEvent: anObject as! Event)
 	            tableView.moveRow(at: indexPath!, to: newIndexPath!)
