@@ -163,7 +163,7 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
 	    fetchRequest.fetchBatchSize = 20
 	    
 	    // Edit the sort key as appropriate.
-	    let sortDescriptor = NSSortDescriptor(key: "counterTitle", ascending: true)
+			let sortDescriptor = NSSortDescriptor(key: "counterTitle", ascending: true, selector: #selector(NSString.localizedCaseInsensitiveCompare(_:)))
 	    
 	    fetchRequest.sortDescriptors = [sortDescriptor]
 	    
