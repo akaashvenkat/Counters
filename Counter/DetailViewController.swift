@@ -10,31 +10,70 @@ import UIKit
 
 class DetailViewController: UIViewController {
 
-	@IBOutlet weak var detailDescriptionLabel: UILabel!
-
-
-	func configureView() {
-		// Update the user interface for the detail item.
+	@IBOutlet weak var countTitleLabel: UILabel!
+	@IBOutlet weak var countHeaderLabel: UILabel!
+	@IBOutlet weak var countLabel: UILabel!
+	@IBOutlet weak var subtractButton: UIButton!
+	@IBOutlet weak var addButton: UIButton!
+	@IBOutlet weak var resetButton: UIButton!
+	
+	@IBAction func subtractButton(_ sender: Any) {
 		if let detail = detailItem {
-		    if let label = detailDescriptionLabel {
-					label.text = detail.counterTitle! + " " + String(detail.counterVal)
-		    }
+			detail.counterVal -= 1
+		}
+		updateCountLabel()
+	}
+	
+	@IBAction func addButton(_ sender: Any) {
+		if let detail = detailItem {
+			detail.counterVal += 1
+		}
+		updateCountLabel()
+	}
+	
+	@IBAction func resetButton(_ sender: Any) {
+		if let detail = detailItem {
+			detail.counterVal = 0
+		}
+		updateCountLabel()
+	}
+	
+	func updateCountLabel() -> Void {
+		var count = Int64(-1)
+		if let detail = detailItem {
+			count = detail.counterVal
+			
+			if let label = countLabel {
+				label.text = String(count)
+			}
+			if let label = countTitleLabel {
+				label.text = detail.counterTitle
+			}
+		}
+		
+		if (count != 0) {
+			if let button = subtractButton {
+				button.isEnabled = true
+				button.alpha = 1.0
+			}
+		} else {
+			if let button = subtractButton {
+				button.isEnabled = false
+				button.alpha = 0.5
+			}
 		}
 	}
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		// Do any additional setup after loading the view, typically from a nib.
-		configureView()
+		updateCountLabel()
 	}
 
 	var detailItem: Event? {
 		didSet {
-		    // Update the view.
-		    configureView()
+			updateCountLabel()
 		}
 	}
-
 
 }
 

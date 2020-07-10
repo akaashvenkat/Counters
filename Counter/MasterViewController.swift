@@ -59,7 +59,7 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
 		self.present(alert, animated: true, completion: nil)
 		
 		let cancelAction = UIAlertAction(title: "Cancel" , style: .cancel)
-		let saveAction = UIAlertAction(title: "Submit", style: .default) { (action) -> Void in
+		let saveAction = UIAlertAction(title: "Add", style: .default) { (action) -> Void in
 			
 			if((counter_title.text?.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)!
 				|| (counter_val.text?.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)! ){
@@ -218,15 +218,6 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
 	func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
 	    tableView.endUpdates()
 	}
-
-	/*
-	 // Implementing the above methods to update the table view in response to individual changes may have performance implications if a large number of changes are made simultaneously. If this proves to be an issue, you can instead just implement controllerDidChangeContent: which notifies the delegate that all section and object changes have been processed.
-	 
-	 func controllerDidChangeContent(controller: NSFetchedResultsController) {
-	     // In the simplest, most efficient, case, reload the table view.
-	     tableView.reloadData()
-	 }
-	 */
 
 }
 
