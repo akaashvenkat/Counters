@@ -19,7 +19,13 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
 		super.viewDidLoad()
 		// Do any additional setup after loading the view, typically from a nib.
 		navigationItem.leftBarButtonItem = editButtonItem
-
+		
+		if #available(iOS 13.0, *) {
+			overrideUserInterfaceStyle = .dark
+		} else {
+			// Fallback on earlier versions
+		}
+		
 		let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(insertNewObject(_:)))
 		navigationItem.rightBarButtonItem = addButton
 		if let split = splitViewController {
@@ -58,7 +64,7 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
 		
 		self.present(alert, animated: true, completion: nil)
 		
-		let cancelAction = UIAlertAction(title: "Cancel" , style: .cancel)
+		let cancelAction = UIAlertAction(title: "Cancel" , style: .default)
 		let saveAction = UIAlertAction(title: "Add", style: .default) { (action) -> Void in
 			
 			if((counter_title.text?.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)!
