@@ -19,11 +19,13 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
 		super.viewDidLoad()
 		// Do any additional setup after loading the view, typically from a nib.
 		navigationItem.leftBarButtonItem = editButtonItem
-		
+
 		if #available(iOS 13.0, *) {
-			overrideUserInterfaceStyle = .dark
-		} else {
-			// Fallback on earlier versions
+			if self.traitCollection.userInterfaceStyle == .dark {
+				self.tableView.backgroundColor = UIColor.black
+			} else {
+				self.tableView.backgroundColor = UIColor.white
+			}
 		}
 		
 		let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(insertNewObject(_:)))
@@ -126,6 +128,19 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
 		let event = fetchedResultsController.object(at: indexPath)
+		
+		if #available(iOS 13.0, *) {
+			if self.traitCollection.userInterfaceStyle == .dark {
+				cell.contentView.backgroundColor = UIColor.black
+				cell.textLabel?.textColor = UIColor.white
+				cell.detailTextLabel?.textColor = UIColor.systemGreen
+			} else {
+				cell.contentView.backgroundColor = UIColor.white
+				cell.textLabel?.textColor = UIColor.black
+				cell.detailTextLabel?.textColor = UIColor.blue
+			}
+		}
+		
 		configureCell(cell, withEvent: event)
 		return cell
 	}
@@ -140,6 +155,7 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
 		    let context = fetchedResultsController.managedObjectContext
 		    context.delete(fetchedResultsController.object(at: indexPath))
 		        
+
 		    do {
 		        try context.save()
 		    } catch {
