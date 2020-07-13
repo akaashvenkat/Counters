@@ -55,6 +55,7 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
 		
 		alert.addTextField(configurationHandler: {(textField: UITextField!) in
 			textField.placeholder = "Counter Title..."
+			textField.autocapitalizationType = UITextAutocapitalizationType.words
 			counter_title = textField
 		})
 		
@@ -126,9 +127,8 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
 	}
 
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
-		let event = fetchedResultsController.object(at: indexPath)
 		
+		let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
 		if #available(iOS 13.0, *) {
 			if self.traitCollection.userInterfaceStyle == .dark {
 				cell.contentView.backgroundColor = UIColor.black
@@ -140,7 +140,9 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
 				cell.detailTextLabel?.textColor = UIColor.blue
 			}
 		}
+		cell.accessoryType = .disclosureIndicator
 		
+		let event = fetchedResultsController.object(at: indexPath)
 		configureCell(cell, withEvent: event)
 		return cell
 	}
@@ -155,7 +157,6 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
 		    let context = fetchedResultsController.managedObjectContext
 		    context.delete(fetchedResultsController.object(at: indexPath))
 		        
-
 		    do {
 		        try context.save()
 		    } catch {
@@ -185,7 +186,7 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
 	    fetchRequest.fetchBatchSize = 20
 	    
 	    // Edit the sort key as appropriate.
-			let sortDescriptor = NSSortDescriptor(key: "counterTitle", ascending: true, selector: #selector(NSString.localizedCaseInsensitiveCompare(_:)))
+		let sortDescriptor = NSSortDescriptor(key: "counterTitle", ascending: true, selector: #selector(NSString.localizedCaseInsensitiveCompare(_:)))
 	    
 	    fetchRequest.sortDescriptors = [sortDescriptor]
 	    
@@ -217,7 +218,7 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
 	        case .insert:
 	            tableView.insertSections(IndexSet(integer: sectionIndex), with: .fade)
 	        case .delete:
-	            tableView.deleteSections(IndexSet(integer: sectionIndex), with: .fade)
+				tableView.deleteSections(IndexSet(integer: sectionIndex), with: .fade)
 	        default:
 	            return
 	    }
@@ -230,10 +231,12 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
 	        case .delete:
 	            tableView.deleteRows(at: [indexPath!], with: .fade)
 	        case .update:
-							configureCell(tableView.cellForRow(at: indexPath!)!, withEvent: anObject as! Event)
+				configureCell(tableView.cellForRow(at: indexPath!)!, withEvent: anObject as! Event)
 	        case .move:
 	            configureCell(tableView.cellForRow(at: indexPath!)!, withEvent: anObject as! Event)
 	            tableView.moveRow(at: indexPath!, to: newIndexPath!)
+			default:
+				return
 	    }
 	}
 
