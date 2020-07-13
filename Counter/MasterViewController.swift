@@ -53,21 +53,9 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
 		
 		let alert = UIAlertController(title: "New Counter", message: message, preferredStyle: .alert)
 		
-		alert.addTextField(configurationHandler: {(textField: UITextField!) in
-			textField.placeholder = "Counter Title..."
-			textField.autocapitalizationType = UITextAutocapitalizationType.words
-			counter_title = textField
-		})
-		
-		alert.addTextField(configurationHandler: {(textField: UITextField!) in
-			textField.placeholder = "Counter Value..."
-			textField.keyboardType = UIKeyboardType.numberPad
-			counter_val = textField
-		})
-		
 		self.present(alert, animated: true, completion: nil)
 		
-		let cancelAction = UIAlertAction(title: "Cancel" , style: .default)
+		let cancelAction = UIAlertAction(title: "Cancel" , style: .destructive)
 		let saveAction = UIAlertAction(title: "Add", style: .default) { (action) -> Void in
 			
 			if((counter_title.text?.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)!
@@ -75,15 +63,12 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
 				
 				counter_title.text = ""
 				counter_val.text = ""
-				
-				self.displayForm(message: "One of the values entered was invalid. Please re-enter information.")
 			}
 			else {
 				let context = self.fetchedResultsController.managedObjectContext
 				let newEvent = Event(context: context)
 				
 				// If appropriate, configure the new managed object.
-				newEvent.timestamp = Date()
 				newEvent.counterTitle = counter_title.text!
 				newEvent.counterVal = Int64(counter_val.text!)!
 				
@@ -96,9 +81,39 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
 				}
 			}
 		}
+
+		alert.addTextField(configurationHandler: {(textField: UITextField!) in
+			textField.placeholder = "Counter Title..."
+			textField.autocapitalizationType = UITextAutocapitalizationType.words
+			saveAction.isEnabled = false
+			
+			NotificationCenter.default.addObserver(forName: UITextField.textDidChangeNotification, object: counter_title, queue: OperationQueue.main, using:
+				{_ in
+					let textCount = counter_title.text?.trimmingCharacters(in: .whitespacesAndNewlines).count ?? 0
+					let textIsNotEmpty = textCount > 0
+					saveAction.isEnabled = textIsNotEmpty
+			})
+			
+			counter_title = textField
+		})
+		
+		alert.addTextField(configurationHandler: {(textField: UITextField!) in
+			textField.placeholder = "Counter Value..."
+			textField.keyboardType = UIKeyboardType.numberPad
+			saveAction.isEnabled = false
+			
+			NotificationCenter.default.addObserver(forName: UITextField.textDidChangeNotification, object: counter_val, queue: OperationQueue.main, using:
+				{_ in
+					let textCount = counter_val.text?.trimmingCharacters(in: .whitespacesAndNewlines).count ?? 0
+					let textIsNotEmpty = textCount > 0
+					saveAction.isEnabled = textIsNotEmpty
+			})
+			
+			counter_val = textField
+		})
+		
 		alert.addAction(cancelAction)
 		alert.addAction(saveAction)
-		
 	}
 
 	// MARK: - Segues
@@ -243,6 +258,5 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
 	func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
 	    tableView.endUpdates()
 	}
-
+	
 }
-

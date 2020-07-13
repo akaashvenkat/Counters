@@ -93,9 +93,114 @@ class DetailViewController: UIViewController {
 			}
 		}
 		
+		let tapTitleGesture = UITapGestureRecognizer(target: self, action: #selector(handleTitleTap(_:)))
+		countTitleLabel.isUserInteractionEnabled=true
+		countTitleLabel.addGestureRecognizer(tapTitleGesture)
+		
+		let tapCountGesture = UITapGestureRecognizer(target: self, action: #selector(handleCountTap(_:)))
+		countLabel.isUserInteractionEnabled=true
+		countLabel.addGestureRecognizer(tapCountGesture)
+		
 		updateCountLabel()
 	}
 
+	@objc func handleTitleTap(_ sender: UITapGestureRecognizer) {
+		var counter_title: UITextField!
+		
+		let alert = UIAlertController(title: "Update Counter Title", message: "", preferredStyle: .alert)
+		
+		self.present(alert, animated: true, completion: nil)
+		
+		let cancelAction = UIAlertAction(title: "Cancel" , style: .destructive)
+		let updateAction = UIAlertAction(title: "Update", style: .default) { (action) -> Void in
+			
+			if((counter_title.text?.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)!){
+				counter_title.text = ""
+			}
+			else {
+				if let detail = self.detailItem {
+					detail.counterTitle = counter_title.text!
+				}
+				self.updateCountLabel()
+			}
+		}
+		
+		alert.addTextField(configurationHandler: {(textField: UITextField!) in
+			if let detail = self.detailItem {
+				textField.text = detail.counterTitle
+				updateAction.isEnabled = false
+			}
+			textField.autocapitalizationType = UITextAutocapitalizationType.words
+			
+			NotificationCenter.default.addObserver(forName: UITextField.textDidChangeNotification, object: textField, queue: OperationQueue.main, using:
+				{_ in
+					let textCount = textField.text?.trimmingCharacters(in: .whitespacesAndNewlines).count ?? 0
+					let textIsNotEmpty = textCount > 0
+					updateAction.isEnabled = textIsNotEmpty
+					
+					if let detail = self.detailItem {
+						if textField.text == detail.counterTitle {
+							updateAction.isEnabled = false
+						}
+					}
+			})
+			
+			counter_title = textField
+		})
+		
+		alert.addAction(cancelAction)
+		alert.addAction(updateAction)
+	}
+	
+	@objc func handleCountTap(_ sender: UITapGestureRecognizer) {
+		var counter_val: UITextField!
+		
+		let alert = UIAlertController(title: "Update Counter Value", message: "", preferredStyle: .alert)
+		
+		self.present(alert, animated: true, completion: nil)
+		
+		let cancelAction = UIAlertAction(title: "Cancel" , style: .destructive)
+		let updateAction = UIAlertAction(title: "Update", style: .default) { (action) -> Void in
+			
+			if((counter_val.text?.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)!){
+				counter_val.text = ""
+			}
+			else {
+				if let detail = self.detailItem {
+					detail.counterVal = Int64(counter_val.text!)!
+				}
+				self.updateCountLabel()
+			}
+		}
+		updateAction.isEnabled = false
+		
+		alert.addTextField(configurationHandler: {(textField: UITextField!) in
+			if let detail = self.detailItem {
+				textField.text = String(detail.counterVal)
+				updateAction.isEnabled = false
+			}
+			textField.keyboardType = UIKeyboardType.numberPad
+			
+			NotificationCenter.default.addObserver(forName: UITextField.textDidChangeNotification, object: textField, queue: OperationQueue.main, using:
+				{_ in
+					let textCount = textField.text?.trimmingCharacters(in: .whitespacesAndNewlines).count ?? 0
+					let textIsNotEmpty = textCount > 0
+					updateAction.isEnabled = textIsNotEmpty
+					
+					if let detail = self.detailItem {
+						if textField.text == String(detail.counterVal) {
+							updateAction.isEnabled = false
+						}
+					}
+			})
+			
+			counter_val = textField
+		})
+		
+		alert.addAction(cancelAction)
+		alert.addAction(updateAction)
+	}
+	
 	var detailItem: Event? {
 		didSet {
 			updateCountLabel()
