@@ -17,7 +17,6 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		// Do any additional setup after loading the view, typically from a nib.
 		navigationItem.leftBarButtonItem = editButtonItem
 
 		if #available(iOS 13.0, *) {
@@ -68,11 +67,9 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
 				let context = self.fetchedResultsController.managedObjectContext
 				let newEvent = Event(context: context)
 				
-				// If appropriate, configure the new managed object.
 				newEvent.counterTitle = counter_title.text!
 				newEvent.counterVal = Int64(counter_val.text!)!
 				
-				// Save the context.
 				do {
 					try context.save()
 				} catch {
@@ -163,7 +160,6 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
 	}
 
 	override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-		// Return false if you do not want the specified item to be editable.
 		return true
 	}
 
@@ -175,8 +171,6 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
 		    do {
 		        try context.save()
 		    } catch {
-		        // Replace this implementation with code to handle the error appropriately.
-		        // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
 		        let nserror = error as NSError
 		        fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
 		    }
@@ -197,16 +191,12 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
 	    
 	    let fetchRequest: NSFetchRequest<Event> = Event.fetchRequest()
 	    
-	    // Set the batch size to a suitable number.
 	    fetchRequest.fetchBatchSize = 20
 	    
-	    // Edit the sort key as appropriate.
 		let sortDescriptor = NSSortDescriptor(key: "counterTitle", ascending: true, selector: #selector(NSString.localizedCaseInsensitiveCompare(_:)))
 	    
 	    fetchRequest.sortDescriptors = [sortDescriptor]
 	    
-	    // Edit the section name key path and cache name if appropriate.
-	    // nil for section name key path means "no sections".
 	    let aFetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: self.managedObjectContext!, sectionNameKeyPath: nil, cacheName: "Counters")
 	    aFetchedResultsController.delegate = self
 	    _fetchedResultsController = aFetchedResultsController
@@ -214,8 +204,6 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
 	    do {
 	        try _fetchedResultsController!.performFetch()
 	    } catch {
-	         // Replace this implementation with code to handle the error appropriately.
-	         // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development. 
 	         let nserror = error as NSError
 	         fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
 	    }
