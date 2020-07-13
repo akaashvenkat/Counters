@@ -7,12 +7,14 @@ Configured for iOS 13.0+. Light/Dark mode compatible.
 - - - -
 
 Views
-* List of Counters, Dark Mode
+* List of Counters, Light Mode
 * Add New Counter, Dark Mode
-* Update Counter, Light Mode
+* Delete Existing Counter, Light Mode
+* Update Counter, Dark Mode
 
 <p align="center">
   <img src="/screenshots/counters_list.png" width="200" height="400" >
   <img src="/screenshots/add_counter.png" width="200" height="400" >
+  <img src="/screenshots/delete_counter.png" width="200" height="400" >
   <img src="/screenshots/update_count.png" width="200" height="400" >
 </p>
