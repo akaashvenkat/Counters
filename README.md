@@ -13,8 +13,8 @@ Views
 * Update Counter, Dark Mode
 
 <p align="center">
-  <img src="/screenshots/counters_list.png" width="200" height="400" >
-  <img src="/screenshots/add_counter.png" width="200" height="400" >
-  <img src="/screenshots/delete_counter.png" width="200" height="400" >
-  <img src="/screenshots/update_count.png" width="200" height="400" >
+  <img src="/screenshots/counters_list.png" width="180" height="340" >
+  <img src="/screenshots/add_counter.png" width="180" height="340" >
+  <img src="/screenshots/delete_counter.png" width="180" height="340" >
+  <img src="/screenshots/update_count.png" width="180" height="340" >
 </p>
