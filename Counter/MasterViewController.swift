@@ -59,7 +59,6 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
 			
 			if((counter_title.text?.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)!
 				|| (counter_val.text?.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)! ){
-				
 				counter_title.text = ""
 				counter_val.text = ""
 			}
@@ -89,6 +88,9 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
 					let textCount = counter_title.text?.trimmingCharacters(in: .whitespacesAndNewlines).count ?? 0
 					let textIsNotEmpty = textCount > 0
 					saveAction.isEnabled = textIsNotEmpty
+					
+					let isUsed = self.someEntityExists(title: counter_title.text!)
+					saveAction.isEnabled = !isUsed
 			})
 			
 			counter_title = textField
@@ -104,6 +106,9 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
 					let textCount = counter_val.text?.trimmingCharacters(in: .whitespacesAndNewlines).count ?? 0
 					let textIsNotEmpty = textCount > 0
 					saveAction.isEnabled = textIsNotEmpty
+					
+					let isUsed = self.someEntityExists(title: counter_title.text!)
+					saveAction.isEnabled = !isUsed
 			})
 			
 			counter_val = textField
@@ -111,6 +116,22 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
 		
 		alert.addAction(cancelAction)
 		alert.addAction(saveAction)
+	}
+	
+	func someEntityExists(title: String) -> Bool {
+		let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Event")
+		fetchRequest.predicate = NSPredicate(format: "counterTitle = %@", title)
+
+		var results: [NSManagedObject] = []
+
+		do {
+			results = try managedObjectContext!.fetch(fetchRequest)
+		}
+		catch {
+			print("error executing fetch request: \(error)")
+		}
+
+		return results.count > 0
 	}
 
 	// MARK: - Segues
@@ -153,6 +174,7 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
 			}
 		}
 		cell.accessoryType = .disclosureIndicator
+		cell.selectionStyle = UITableViewCell.SelectionStyle.none
 		
 		let event = fetchedResultsController.object(at: indexPath)
 		configureCell(cell, withEvent: event)

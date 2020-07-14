@@ -62,6 +62,8 @@ class DetailViewController: UIViewController {
 				button.alpha = 0.5
 			}
 		}
+		
+		(UIApplication.shared.delegate as! AppDelegate).saveContext()
 	}
 
 	override func viewDidLoad() {
